@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mountain Gate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    :root {
+        --cyan: #4df3ff;
+        --blue: #4d7dff;
+        --text: #e8f7ff;
+        --muted: #9bb3c9;
+        --radius: 16px;
+        --panel: rgba(5, 8, 15, 0.82);
+        --neon: 0 0 18px rgba(77,243,255,0.7), 0 0 40px rgba(77,125,255,0.4);
+    }
+
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        background: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") center/cover no-repeat;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.85));
+        z-index: 0;
+    }
+
+    .wrapper {
+        position: relative;
+        z-index: 2;
+        width: 900px;
+        min-height: 520px;
+        background: var(--panel);
+        border-radius: var(--radius);
+        box-shadow: var(--neon);
+        backdrop-filter: blur(6px);
+        display: flex;
+        overflow: hidden;
+    }
+
+    .left {
+        flex: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .left h1 {
+        font-size: 46px;
+        margin: 0;
+        color: var(--cyan);
+        text-shadow: var(--neon);
+    }
+
+    .left p {
+        margin-top: 12px;
+        font-size: 15px;
+        color: var(--muted);
+        max-width: 260px;
+    }
+
+    .right {
+        width: 380px;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .screen {
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .screen.active {
+        display: flex;
+    }
+
+    h2 {
+        margin: 0 0 10px;
+        font-size: 26px;
+        color: var(--cyan);
+        text-shadow: var(--neon);
+    }
+
+    .field label {
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .field input {
+        width: 100%;
+        padding: 12px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.08);
+        color: var(--text);
+        font-size: 14px;
+        outline: none;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border-radius: var(--radius);
+        border: none;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        color: #0a0f1a;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: var(--neon);
+        margin-top: 10px;
+    }
+
+    .switch {
+        margin-top: 12px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .switch a {
+        color: var(--cyan);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    #msg {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: var(--radius);
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        display: none;
+    }
+
+    #msg.error {
+        background: rgba(255, 80, 80, 0.25);
+        color: #ffb3b3;
+        border: 1px solid rgba(255, 80, 80, 0.4);
+    }
+
+    #msg.success {
+        background: rgba(80, 255, 120, 0.25);
+        color: #b3ffcf;
+        border: 1px solid rgba(80, 255, 120, 0.4);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div class="left">
+        <h1>Mountain Gate</h1>
+        <p>Enter the glowing summit. Switch between login and register on the right.</p>
+    </div>
+
+    <div class="right">
+
+        <div id="msg"></div>
+
+        <!-- LOGIN -->
+        <div class="screen active" id="login-screen">
+            <h2>Login</h2>
+
+            <form id="login-form">
+                <div class="field">
+                    <label>Email or Username</label>
+                    <input name="identifier" required>
+                </div>
+
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <button class="btn">Enter</button>
+            </form>
+
+            <div class="switch">
+                <a onclick="showRegister()">Create an account</a>
+            </div>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="screen" id="register-screen">
+            <h2>Register</h2>
+
+            <form id="register-form">
+                <div class="field">
+                    <label>Email</label>
+                    <input name="email" required>
+                </div>
+
+                <div class="field">
+                    <label>Username</label>
+                    <input name="username" required>
+                </div>
+
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <button class="btn">Create Account</button>
+            </form>
+
+            <div class="switch">
+                <a onclick="showLogin()">Back to login</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function showMessage(text, type = "error") {
+    const msg = document.getElementById("msg");
+    msg.textContent = text;
+    msg.className = "";
+    msg.classList.add(type);
+    msg.style.display = "block";
+}
+
+function clearMessage() {
+    const msg = document.getElementById("msg");
+    msg.style.display = "none";
+}
+
+function showLogin() {
+    clearMessage();
+    document.getElementById("login-screen").classList.add("active");
+    document.getElementById("register-screen").classList.remove("active");
+}
+
+function showRegister() {
+    clearMessage();
+    document.getElementById("register-screen").classList.add("active");
+    document.getElementById("login-screen").classList.remove("active");
+}
+
+async function submitForm(e, endpoint) {
+    e.preventDefault();
+    const formData = new URLSearchParams(new FormData(e.target));
+
+    try {
+        const res = await fetch(endpoint, {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+            showMessage(data.error, "error");
+            return;
+        }
+
+        if (data.success === true) {
+            showMessage("Success! Redirecting...", "success");
+            setTimeout(() => window.location.href = "/chat_sessions", 800);
+            return;
+        }
+
+        showMessage("Unexpected server response", "error");
+
+    } catch (err) {
+        showMessage("Network error: " + err.message, "error");
+    }
+}
+
+document.getElementById("login-form").addEventListener("submit", e => submitForm(e, "/auth/login"));
+document.getElementById("register-form").addEventListener("submit", e => submitForm(e, "/auth/register"));
+</script>
+
+</body>
+</html>

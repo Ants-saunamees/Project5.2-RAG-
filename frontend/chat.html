@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    :root {
+        --cyan: #4df3ff;
+        --blue: #4d7dff;
+        --text: #e8f7ff;
+        --panel: rgba(5, 8, 15, 0.82);
+        --radius: 16px;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        background: #05080f;
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .wrapper {
+        width: 900px;
+        height: 90vh;
+        background: var(--panel);
+        border-radius: var(--radius);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(10px);
+    }
+
+    #top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 32px;
+        color: var(--cyan);
+    }
+
+    .btn {
+        padding: 10px 18px;
+        border-radius: var(--radius);
+        border: none;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        color: #05080f;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    #chatBox {
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding-right: 10px;
+    }
+
+    .msg {
+        max-width: 70%;
+        padding: 12px 16px;
+        border-radius: 14px;
+        font-size: 15px;
+        line-height: 1.4;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .user {
+        align-self: flex-end;
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
+        color: #05080f;
+        border-bottom-right-radius: 4px;
+    }
+
+    .assistant {
+        align-self: flex-start;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-bottom-left-radius: 4px;
+    }
+
+    .loading {
+        opacity: 0.6;
+        font-style: italic;
+    }
+
+    #inputBar {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    #messageInput {
+        flex: 1;
+        padding: 14px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+        font-size: 15px;
+    }
+
+    #sendBtn {
+        padding: 14px 20px;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 700;
+        color: #05080f;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div id="top-bar">
+        <h1>Chat</h1>
+        <button class="btn" onclick="window.location.href='/chat_sessions'">Back</button>
+    </div>
+
+    <div id="chatBox"></div>
+
+    <div id="inputBar">
+        <input id="messageInput" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+    </div>
+
+</div>
+
+<script>
+    const chatBox = document.getElementById("chatBox");
+    const sendBtn = document.getElementById("sendBtn");
+    const messageInput = document.getElementById("messageInput");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get("session_id");
+
+    if (!sessionId) {
+        alert("Missing session_id. Open chat from sessions page.");
+        window.location.href = "/chat_sessions";
+        throw new Error("Missing session_id");
+    }
+
+    async function loadHistory() {
+        const res = await fetch(`/message/get_history?session_id=${sessionId}`);
+        const messages = await res.json();
+
+        messages.forEach(msg => addMessage(msg.role, msg.content));
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addMessage(role, text, id = null) {
+        const div = document.createElement("div");
+        div.className = `msg ${role}`;
+        div.id = id || "";
+        div.textContent = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = messageInput.value.trim();
+        if (!text) return;
+
+        messageInput.value = "";
+        addMessage("user", text);
+
+        // SAVE MESSAGE
+        const form1 = new FormData();
+        form1.append("room_id", sessionId);
+        form1.append("role", "user");
+        form1.append("content", text);
+
+        await fetch("/message/save_message", {
+            method: "POST",
+            body: form1
+        });
+
+        // LOADING BUBBLE
+        const loadingId = "loading-" + Date.now();
+        addMessage("assistant", "Thinking...", loadingId);
+        document.getElementById(loadingId).classList.add("loading");
+
+        // LLM ANSWER
+        const form2 = new FormData();
+        form2.append("session_id", sessionId);
+        form2.append("question", text);
+
+        const res = await fetch("/llm/llm_answer", {
+            method: "POST",
+            body: form2
+        });
+
+        const data = await res.json();
+
+        const bubble = document.getElementById(loadingId);
+        bubble.textContent = data.answer;
+        bubble.classList.remove("loading");
+
+        // SAVE ASSISTANT MESSAGE
+        const form3 = new FormData();
+        form3.append("room_id", sessionId);
+        form3.append("role", "assistant");
+        form3.append("content", data.answer);
+
+        await fetch("/message/save_message", {
+            method: "POST",
+            body: form3
+        });
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    sendBtn.onclick = sendMessage;
+    messageInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") sendMessage();
+    });
+
+    loadHistory();
+</script>
+
+</body>
+</html>

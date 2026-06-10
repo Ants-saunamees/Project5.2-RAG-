@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Chat Sessions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    :root {
+        --cyan: #4df3ff;
+        --blue: #4d7dff;
+        --text: #e8f7ff;
+        --panel: rgba(5, 8, 15, 0.82);
+        --radius: 16px;
+        --neon: 0 0 18px rgba(77,243,255,0.7), 0 0 40px rgba(77,125,255,0.4);
+    }
+
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        background: #0a0f1a;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .wrapper {
+        width: 900px;
+        min-height: 600px;
+        background: var(--panel);
+        border-radius: var(--radius);
+        box-shadow: var(--neon);
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        margin: 0 0 20px;
+        font-size: 40px;
+        color: var(--cyan);
+        text-shadow: var(--neon);
+    }
+
+    #top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        border-radius: var(--radius);
+        border: none;
+        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        color: #0a0f1a;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: var(--neon);
+    }
+
+    #msg {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: var(--radius);
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        display: none;
+    }
+
+    #msg.error {
+        background: rgba(255, 80, 80, 0.25);
+        color: #ffb3b3;
+    }
+
+    #msg.success {
+        background: rgba(80, 255, 120, 0.25);
+        color: #b3ffcf;
+    }
+
+    #sessions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .session {
+        background: rgba(255,255,255,0.05);
+        padding: 15px;
+        border-radius: var(--radius);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .session:hover {
+        background: rgba(255,255,255,0.12);
+    }
+
+    .session-title {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .icon-btn {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        color: var(--cyan);
+        font-weight: bold;
+    }
+
+    .icon-btn:hover {
+        background: rgba(255,255,255,0.2);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div id="top-bar">
+        <h1>Your Chat Sessions</h1>
+        <button class="btn" onclick="logout()">Logout</button>
+    </div>
+
+    <button class="btn" onclick="createSession()">+ New Chat Session</button>
+
+    <div id="msg"></div>
+
+    <div id="sessions"></div>
+</div>
+
+<script>
+function showMessage(text, type="error") {
+    const msg = document.getElementById("msg");
+    msg.textContent = text;
+    msg.className = "";
+    msg.classList.add(type);
+    msg.style.display = "block";
+}
+
+async function logout() {
+    await fetch("/auth/logout", { method: "POST" });
+    window.location.href = "/";
+}
+
+async function createSession() {
+    const title = prompt("Enter a title for your new chat session:");
+    if (!title) return;
+
+    const res = await fetch("/chat/create_session", {
+        method: "POST",
+        body: new URLSearchParams({ title })
+    });
+
+    const data = await res.json();
+    if (data.error) return showMessage(data.error, "error");
+
+    showMessage("Session created!", "success");
+    loadSessions();
+}
+
+async function loadSessions() {
+    const res = await fetch("/chat/list_sessions");
+    const data = await res.json();
+
+    if (data.error) return showMessage(data.error, "error");
+
+    const container = document.getElementById("sessions");
+    container.innerHTML = "";
+
+    data.sessions.forEach(session => {
+        const div = document.createElement("div");
+        div.className = "session";
+
+        div.onclick = () => {
+            window.location.href = `/chat?session_id=${session.id}`;
+        };
+
+        const title = document.createElement("div");
+        title.className = "session-title";
+        title.textContent = session.title;
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "icon-btn";
+        editBtn.textContent = "✏️";
+        editBtn.onclick = (e) => {
+            e.stopPropagation();
+            updateTitle(session.id);
+        };
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "icon-btn";
+        delBtn.textContent = "🗑️";
+        delBtn.onclick = (e) => {
+            e.stopPropagation();
+            deleteSession(session.id);
+        };
+
+        actions.appendChild(editBtn);
+        actions.appendChild(delBtn);
+
+        div.appendChild(title);
+        div.appendChild(actions);
+
+        container.appendChild(div);
+    });
+}
+
+async function updateTitle(session_id) {
+    const new_title = prompt("Enter new title:");
+    if (!new_title) return;
+
+    const res = await fetch("/chat/update_title?" + new URLSearchParams({
+        session_id,
+        new_title
+    }), { method: "PATCH" });
+
+    const data = await res.json();
+    if (data.error) return showMessage(data.error, "error");
+
+    showMessage("Title updated!", "success");
+    loadSessions();
+}
+
+async function deleteSession(session_id) {
+    if (!confirm("Delete this session?")) return;
+
+    const res = await fetch("/chat/delete_session?" + new URLSearchParams({
+        session_id
+    }), { method: "DELETE" });
+
+    const data = await res.json();
+    if (data.error) return showMessage(data.error, "error");
+
+    showMessage("Session deleted!", "success");
+    loadSessions();
+}
+
+loadSessions();
+</script>
+
+</body>
+</html>
+
