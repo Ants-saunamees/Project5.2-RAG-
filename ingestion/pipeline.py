@@ -9,7 +9,7 @@ import asyncio
 async def pipeline(department: str):
     result = loader(department)
 
-    await create_index() siin on katki
+    await create_index() siin on katki siga
 
     for chunk in chunker(result["text"], result["department"]):
         id = uuid.uuid4()
