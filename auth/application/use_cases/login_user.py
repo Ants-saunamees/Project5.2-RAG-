@@ -4,7 +4,8 @@ from auth.domain.entities.token import RefreshToken
 from auth.domain.services.token_services import create_refresh_token, create_access_token
 from auth.domain.interfaces.user_repo import UserRepository
 from auth.domain.interfaces.token_repo import RefreshTokenRepository
-from auth.domain.services.auth_services import is_email
+from auth.domain.services.auth_services import is_email, prehash
+
 
 class LoginUserUseCase:
     def __init__(self, user_repo: UserRepository, token_repo: RefreshTokenRepository):
@@ -25,7 +26,7 @@ class LoginUserUseCase:
             raise Exception("Invalid credentials")
 
         # 3. Password check
-        if not verify_password(password, user.password_hash):
+        if not verify_password(prehash(password), user.password_hash):
             raise Exception("Invalid credentials")
 
         access_token = create_access_token({

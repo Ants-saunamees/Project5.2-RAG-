@@ -1,4 +1,4 @@
-from auth.domain.services.auth_services import hash
+from auth.domain.services.auth_services import hash_password, prehash
 
 class User:
     def __init__(self, id: int | None, username: str, email: str, password_hash: str):
@@ -9,7 +9,9 @@ class User:
 
     @staticmethod
     def create(username: str, email: str, raw_password: str):
-        hashed = hash(raw_password)
+        print("hit here")
+        hashed = hash_password(prehash(raw_password))
+        print("easy", hashed)
 
         return User(
             id=None,

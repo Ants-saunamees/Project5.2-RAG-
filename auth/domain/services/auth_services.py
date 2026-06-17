@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 import re
-
+import hashlib
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(
@@ -8,8 +8,11 @@ pwd_context = CryptContext(
     deprecated="auto"
 )
 
-def hash(password: str) -> str:
+def hash_password(password: str) -> str:
     return pwd_context.hash(password)
+
+def prehash(password: str) -> str:
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def verify_password(plain: str, hashed: str) -> bool:
     return pwd_context.verify(plain, hashed)
