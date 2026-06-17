@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ee80fda3-3a87-41ce-b6fd-e4556cd24b3f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/application/use_cases/login_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/application/use_cases/login_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/domain/entities/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/domain/entities/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/domain/services/auth_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/domain/services/auth_services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ingestion/chunking_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/chunking_rules.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ingestion/loaders.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/loaders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ingestion/pipeline.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/chroma_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/chroma_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingestion/chroma_db/chroma.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/chroma_db/chroma.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingestion/ingestion_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/ingestion_pipeline.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,33 +34,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;HTTP Request.generated-requests | #1.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.chat_session.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.ingestion_pipeline.executor&quot;: &quot;Run&quot;,
-    &quot;Python.loaders.executor&quot;: &quot;Run&quot;,
-    &quot;Python.message.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.pipeline.executor&quot;: &quot;Run&quot;,
-    &quot;Python.query_rewriter.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;branch__1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Windows_11/PyCharmMiscProject/Github projects/Project5.2-RAG-&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "HTTP Request.generated-requests | #1.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.chat_session.executor": "Debug",
+    "Python.chroma_db.executor": "Run",
+    "Python.ingestion_pipeline.executor": "Run",
+    "Python.loaders.executor": "Run",
+    "Python.message.executor": "Debug",
+    "Python.pipeline.executor": "Run",
+    "Python.query_rewriter.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "branch__1",
+    "last_opened_file_path": "C:/Users/Windows_11/PyCharmMiscProject/Github projects/Project5.2-RAG-",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunDashboard">
     <option name="configurationStatuses">
       <map>
@@ -113,7 +111,7 @@
       <workItem from="1781525322414" duration="3633000" />
       <workItem from="1781611125142" duration="1429000" />
       <workItem from="1781612590591" duration="2743000" />
-      <workItem from="1781694203080" duration="1361000" />
+      <workItem from="1781694203080" duration="4236000" />
     </task>
     <servers />
   </component>
@@ -121,7 +119,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project5_2_RAG_$ingestion_pipeline.coverage" NAME="ingestion_pipeline Coverage Results" MODIFIED="1781695388624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
+    <SUITE FILE_PATH="coverage/Project5_2_RAG_$ingestion_pipeline.coverage" NAME="ingestion_pipeline Coverage Results" MODIFIED="1781698076933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
+    <SUITE FILE_PATH="coverage/Project5_2_RAG_$chroma_db.coverage" NAME="chroma_db Coverage Results" MODIFIED="1781698120342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
     <SUITE FILE_PATH="coverage/Project5_2_RAG_$loaders.coverage" NAME="loaders Coverage Results" MODIFIED="1781615018071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
   </component>
 </project>
