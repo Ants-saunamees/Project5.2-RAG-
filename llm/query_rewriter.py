@@ -1,16 +1,12 @@
 import httpx
 from config.settings import settings
+from llm.client import chat_with_llm
+
 
 async def query_rewriter(history, question: str) -> str:
-    """
-    Rewrites the user's question into a standalone query using chat history.
-    Accepts a list of Message objects (not dicts).
-    """
-
     # Convert history into readable text
     history_text = ""
     for msg in history:
-        # msg is a Message object → use attributes, not dict keys
         history_text += f"{msg.role}: {msg.content}\n"
 
     prompt = f"""
@@ -30,23 +26,8 @@ Rules:
 - Only output the rewritten question.
 """
 
-    async with httpx.AsyncClient(timeout=60.0) as client:
-        response = await client.post(
-            "http://localhost:11434/api/generate",
-            json={
-                "model": settings.LLM_MODEL,
-                "prompt": prompt,
-                "stream": False
-            }
-        )
+    # ⭐ FIX: await the LLM call
+    llm_raw = await chat_with_llm(prompt)
 
-    data = response.json()
-    print("REWRITER RAW RESPONSE:", data)
-
-    if "error" in data:
-        raise ValueError(f"LLM error: {data['error']}")
-
-    if "response" not in data:
-        raise ValueError(f"Unexpected LLM output: {data}")
-
-    return data["response"].strip()
+    # chat_with_llm already returns the text, so just return it
+    return llm_raw.strip()

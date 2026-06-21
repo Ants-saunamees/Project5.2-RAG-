@@ -1,9 +1,10 @@
 import chromadb
 from sentence_transformers import SentenceTransformer
 import uuid
-
-EMBED_MODEL = "all-MiniLM-L6-v2"
+from config.settings import settings
 import os
+from llm.embedder import embed_text
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHROMA_PATH = os.path.join(BASE_DIR, "chroma_db")
@@ -14,8 +15,6 @@ collection = chroma_client.get_or_create_collection(
     name="documents",
     metadata={"hnsw:space": "cosine"}
 )
-
-embedder = SentenceTransformer(EMBED_MODEL)
 
 
 
@@ -29,8 +28,12 @@ def store_vector(doc_id: str, embedding: list[float], text: str, metadata: dict)
     )
 
 
-def search_vectors(query: str, k: int = 5):
-    query_embedding = embedder.encode(query).tolist()
+async def search_vectors(query: str, k: int = 3):
+
+    query_embedding = await embed_text(query)
+
+    all_docs = collection.get(include=["embeddings"])
+    print("stored dims:", [len(e) for e in all_docs["embeddings"]])
 
     results = collection.query(
         query_embeddings=[query_embedding],
@@ -38,6 +41,8 @@ def search_vectors(query: str, k: int = 5):
     )
 
     return results["documents"][0]
+
+
 
 
 def count_vectors():

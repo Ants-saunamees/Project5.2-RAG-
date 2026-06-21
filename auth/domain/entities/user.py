@@ -9,9 +9,7 @@ class User:
 
     @staticmethod
     def create(username: str, email: str, raw_password: str):
-        print("hit here")
         hashed = hash_password(prehash(raw_password))
-        print("easy", hashed)
 
         return User(
             id=None,

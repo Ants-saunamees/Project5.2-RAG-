@@ -42,7 +42,6 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     await redis_client.close()
-    print("🧹 Cleanup complete")
 
 
 app.include_router(auth_router)

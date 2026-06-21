@@ -23,7 +23,6 @@ async def warmup_llm():
         # If Ollama returned a normal response
         if "response" in data:
             print("🔥 LLM warmed up successfully")
-            print("Model output:", data["response"])
             return
 
         # Unexpected JSON format

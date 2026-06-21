@@ -12,10 +12,8 @@ async def pipeline(department: str):
             embedding = await embed_text(chunk)
             store_vector(doc_id, embedding, chunk, result["metadata"]) # prg peab koik reingestima kui addid juurde
 
-    # AFTER ingestion is done
-    print("Flushing DB...")
     print("Final count:", collection.count())
 
 
 if __name__ == "__main__":
-    asyncio.run(pipeline("pets"))
+    asyncio.run(pipeline("rules"))
