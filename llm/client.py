@@ -6,8 +6,6 @@ import asyncio
 
 
 async def chat_with_llm(prompt: str):
-    print("weee are here")
-
     try:
         async with httpx.AsyncClient(timeout=120) as client:
             response = await client.post(
@@ -22,10 +20,7 @@ async def chat_with_llm(prompt: str):
         print("LLM crashed:", e)
         raise RuntimeError(f"LLM request failed: {e}")
 
-    print("we are here")
-
     data = response.json()
-    print(data)
 
     if "error" in data:
         raise RuntimeError(f"Ollama error: {data['error']}")

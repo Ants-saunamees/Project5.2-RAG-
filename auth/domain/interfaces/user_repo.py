@@ -24,9 +24,3 @@ class UserRepository(ABC):
     def find_by_username(self, username: int) -> User | None:
         """Return a user by username or None if not found."""
         pass
-
-
-    @abstractmethod
-    def update_password_username(self, user: User) -> User:
-        """Persist a user and return the updated entity."""
-        pass

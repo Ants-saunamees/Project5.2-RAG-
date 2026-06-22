@@ -16,4 +16,4 @@ async def pipeline(department: str):
 
 
 if __name__ == "__main__":
-    asyncio.run(pipeline("rules"))
+    asyncio.run(pipeline(""))

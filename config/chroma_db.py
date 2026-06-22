@@ -28,7 +28,7 @@ def store_vector(doc_id: str, embedding: list[float], text: str, metadata: dict)
     )
 
 
-async def search_vectors(query: str, k: int = 3):
+async def search_vectors(query: str, department: str, k: int = 3):
 
     query_embedding = await embed_text(query)
 
@@ -37,7 +37,8 @@ async def search_vectors(query: str, k: int = 3):
 
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=k
+        n_results=k,
+        where={"department": department}
     )
 
     return results["documents"][0]

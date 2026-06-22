@@ -31,13 +31,14 @@ async def llm_answer(
 
     # 4. Retrieve top-k chunks from Redis
     try:
-        docs = await search_vectors(rewritten, k=5)
+        docs = await search_vectors(rewritten, user.department, k=5)
     except Exception as e:
         return {"error": f"vector search failed: {e}"}
 
     # 5. Build context
     try:
         context = "\n\n".join(docs)
+        print(context)
     except Exception as e:
         return {"error": f"context building failed: {e}"}
 

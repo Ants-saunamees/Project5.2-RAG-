@@ -13,13 +13,14 @@ async def register(
     username: str = Form(...),
     email: str = Form(...),
     password: str = Form(...),
+    department: str = Form(...),
     user_repo = Depends(get_user_repo),
-    token_repo = Depends(get_token_repo),
+    token_repo = Depends(get_token_repo)
 ):
     use_case = RegisterUserUseCase(user_repo, token_repo)
 
     try:
-        result = await use_case.execute(username, email, password)
+        result = await use_case.execute(username, email, password, department)
 
     except Exception as e:
         return {"error": str(e)}

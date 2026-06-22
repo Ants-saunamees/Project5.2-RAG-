@@ -6,24 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="ee80fda3-3a87-41ce-b6fd-e4556cd24b3f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/async_inference/queue.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/async_inference/result_store.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/async_inference/worker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/application/use_cases/register_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/application/use_cases/register_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth/domain/entities/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/domain/entities/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth/infrastructure/repositories/token_repo_impl.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/infrastructure/repositories/token_repo_impl.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/data_level0.bin" beforeDir="false" afterPath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/data_level0.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/length.bin" beforeDir="false" afterPath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/length.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/domain/interfaces/user_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/domain/interfaces/user_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/infrastructure/db/user_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/infrastructure/db/user_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/infrastructure/repositories/user_repo_impl.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/infrastructure/repositories/user_repo_impl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/routes/auth_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/auth/routes/auth_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/data_level0.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/header.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/length.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chroma_db/0d98c0ea-8df8-440f-a33e-afb20f1c06b1/link_lists.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/chroma_db/chroma.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/chroma_db/chroma.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/chroma_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/chroma_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/redis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pets/cats_basic_care.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/pets/cats_basic_care.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingestion/chunking_rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/chunking_rules.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ingestion/ingestion_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/ingestion_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ingestion/loaders.py" beforeDir="false" afterPath="$PROJECT_DIR$/ingestion/loaders.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llm/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/llm/llm_pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/llm_pipeline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm/query_rewriter.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/query_rewriter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/llm/warmup.py" beforeDir="false" afterPath="$PROJECT_DIR$/llm/warmup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +140,10 @@
       <workItem from="1781882164872" duration="365000" />
       <workItem from="1781952399813" duration="5165000" />
       <workItem from="1781992650433" duration="556000" />
-      <workItem from="1782037248127" duration="1262000" />
+      <workItem from="1782037248127" duration="6582000" />
+      <workItem from="1782120588688" duration="1954000" />
+      <workItem from="1782123054666" duration="15000" />
+      <workItem from="1782123234589" duration="12000" />
     </task>
     <servers />
   </component>
@@ -144,8 +151,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project5_2_RAG_$ingestion_pipeline.coverage" NAME="ingestion_pipeline Coverage Results" MODIFIED="1781784041442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
     <SUITE FILE_PATH="coverage/Project5_2_RAG_$chroma_db.coverage" NAME="chroma_db Coverage Results" MODIFIED="1781957998838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
+    <SUITE FILE_PATH="coverage/Project5_2_RAG_$ingestion_pipeline.coverage" NAME="ingestion_pipeline Coverage Results" MODIFIED="1782041797766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
     <SUITE FILE_PATH="coverage/Project5_2_RAG_$loaders.coverage" NAME="loaders Coverage Results" MODIFIED="1781615018071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ingestion" />
   </component>
 </project>
