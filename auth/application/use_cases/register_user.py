@@ -11,7 +11,7 @@ class RegisterUserUseCase:
         self.user_repo = user_repo
         self.token_repo = token_repo
 
-    async def execute(self, username: str, email: str, password: str):
+    async def execute(self, username: str, email: str, password: str, department: str):
         email = email.lower()
 
         # 1. Validate password (raise if invalid)
@@ -27,7 +27,7 @@ class RegisterUserUseCase:
             raise Exception("Username already in use")
 
         # 3. Create user entity
-        user = User.create(username, email, password)
+        user = User.create(username, email, password, department)
         user = await self.user_repo.save(user)
 
         # 4. Create access token

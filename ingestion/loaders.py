@@ -1,7 +1,7 @@
 from pathlib import Path
 
 def loader(department: str):
-    base_path = Path(__file__).resolve().parent
+    base_path = Path(__file__).resolve().parent.parent
     folder = base_path / "docs" / department
 
     for path in folder.rglob("*.md"):

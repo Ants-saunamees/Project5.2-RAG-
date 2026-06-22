@@ -11,6 +11,7 @@ class UserModel(Base):
     username = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
+    department = Column(String, nullable=False)
 
     refresh_tokens = relationship(
         "RefreshTokenModel",

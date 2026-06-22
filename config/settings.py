@@ -52,7 +52,6 @@ class Settings:
     # -----------------------------
     # SECURITY
     # -----------------------------
-    PASSWORD_SALT: str = os.getenv("PASSWORD_SALT", "salt123")
     RATE_LIMIT_REQUESTS: int = int(os.getenv("RATE_LIMIT_REQUESTS", 100))
     RATE_LIMIT_WINDOW_SECONDS: int = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", 60))
 

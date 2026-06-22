@@ -17,7 +17,8 @@ class UserRepoImpl(UserRepository):
             id=None,
             username=user.username,
             email=user.email,
-            password_hash=user.password_hash
+            password_hash=user.password_hash,
+            department=user.department
         )
         self.session.add(model)
         await self.session.commit()
@@ -27,7 +28,8 @@ class UserRepoImpl(UserRepository):
             id=model.id,
             username=model.username,
             email=model.email,
-            password_hash=model.password_hash
+            password_hash=model.password_hash,
+            department=model.department
         )
 
     async def find_by_username(self, username: str) -> User | None:
@@ -43,7 +45,8 @@ class UserRepoImpl(UserRepository):
             id=model.id,
             username=model.username,
             email=model.email,
-            password_hash=model.password_hash
+            password_hash=model.password_hash,
+            department=model.department
         )
 
     async def find_by_email(self, email: str) -> User | None:
@@ -59,8 +62,10 @@ class UserRepoImpl(UserRepository):
             id=model.id,
             username=model.username,
             email=model.email,
-            password_hash=model.password_hash
+            password_hash=model.password_hash,
+            department=model.department
         )
+
     async def find_by_id(self, id: str) -> User | None:
         result = await self.session.execute(
             select(UserModel).where(UserModel.id == id)
@@ -74,32 +79,6 @@ class UserRepoImpl(UserRepository):
             id=model.id,
             username=model.username,
             email=model.email,
-            password_hash=model.password_hash
+            password_hash=model.password_hash,
+            department=model.department
         )
-
-    async def update_password_username(self, new_user: User) -> User | None:
-        # Load DB model
-        stmt = select(UserModel).where(UserModel.id == new_user.id)
-        result = await self.session.execute(stmt)
-        model = result.scalar_one_or_none()
-
-        if model is None:
-            return None
-
-        # Update DB model fields
-        model.username = new_user.username
-        model.password_hash = new_user.password_hash
-
-        await self.session.commit()
-        await self.session.refresh(model)
-
-        # Return domain entity
-        return User(
-            id=model.id,
-            username=model.username,
-            email=model.email,
-            password_hash=model.password_hash
-        )
-
-
-

@@ -15,7 +15,6 @@ app = FastAPI(
     title=settings.APP_NAME,
     debug=settings.APP_DEBUG,
 )
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # change in production
@@ -28,9 +27,6 @@ app.add_middleware(
 async def startup_event():
     print("🚀 Starting backend...")
 
-    # Redis
-    await redis_client.ping()
-
     # LLM warmup
     await warmup_llm()
 
@@ -38,12 +34,6 @@ async def startup_event():
     await init_models()
 
     print(f"🔥 {settings.APP_NAME} is ready")
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await redis_client.close()
-    print("🧹 Cleanup complete")
-
 
 app.include_router(auth_router)
 app.include_router(chat_session_router)

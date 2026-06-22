@@ -101,7 +101,9 @@
         color: var(--muted);
     }
 
-    .field input {
+    /* ⭐ FIX: style select so it becomes visible ⭐ */
+    .field input,
+    .field select {
         width: 100%;
         padding: 12px;
         border-radius: var(--radius);
@@ -214,6 +216,16 @@
                 <div class="field">
                     <label>Password</label>
                     <input type="password" name="password" required>
+                </div>
+
+                <!-- ⭐ FIXED DROPDOWN (now visible) ⭐ -->
+                <div class="field">
+                    <label>Department</label>
+                    <select name="department" required>
+                        <option value="supplies">Supplies</option>
+                        <option value="pets">Pets</option>
+                        <option value="rules">Rules</option>
+                    </select>
                 </div>
 
                 <button class="btn">Create Account</button>

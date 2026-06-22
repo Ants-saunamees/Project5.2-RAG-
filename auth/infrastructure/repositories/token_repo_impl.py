@@ -124,7 +124,6 @@ class TokenRepoImpl(RefreshTokenRepository):
         """
 
         if not raw_token:
-            print("token is none")
             return None
 
         hashed = hash_token(raw_token)
