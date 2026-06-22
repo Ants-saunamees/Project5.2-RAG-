@@ -22,7 +22,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-print
 
 @app.on_event("startup")
 async def startup_event():

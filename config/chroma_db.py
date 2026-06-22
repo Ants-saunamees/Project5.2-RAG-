@@ -19,7 +19,6 @@ collection = chroma_client.get_or_create_collection(
 
 
 def store_vector(doc_id: str, embedding: list[float], text: str, metadata: dict):
-    print("Store vector:", doc_id)
     collection.upsert(
         ids=[doc_id],
         embeddings=[embedding],

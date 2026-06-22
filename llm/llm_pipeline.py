@@ -38,7 +38,6 @@ async def llm_answer(
     # 5. Build context
     try:
         context = "\n\n".join(docs)
-        print(context)
     except Exception as e:
         return {"error": f"context building failed: {e}"}
 
