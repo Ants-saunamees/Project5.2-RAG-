@@ -65,3 +65,8 @@ def chat_sessions():
 @app.get("/chat")
 def chat():
     return FileResponse("frontend/chat.html")
+
+
+@app.get("/health")
+def health():
+    return {"message": "ok"}
