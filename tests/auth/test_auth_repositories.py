@@ -40,6 +40,7 @@ async def session():
 @pytest.mark.asyncio
 async def test_user_save(session: AsyncSession):
     repo = UserRepoImpl(session)
+    print("auth test hit")
 
     user = User(
         id=None,
