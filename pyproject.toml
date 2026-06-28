@@ -1,0 +1,15 @@
+[project]
+name = "rag_app"
+version = "0.1.0"
+description = "My RAG application"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "sqlalchemy",
+    "pydantic",
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]

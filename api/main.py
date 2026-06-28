@@ -28,9 +28,6 @@ app.add_middleware(
 async def startup_event():
     print("🚀 Starting backend...")
 
-    # Redis
-    await redis_client.ping()
-
     # LLM warmup
     await warmup_llm()
 
